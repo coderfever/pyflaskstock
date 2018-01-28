@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, Markup
 import pandas as pd
 
 import fetch_stock as stk
 import generate_chart as gc
+import gen_plotly as gp
 
 app = Flask(__name__)
 
@@ -23,6 +24,10 @@ def create_stock_chart():
     plot_url = gc.generate_plot(stock)
     return render_template('home.html', plot_url=plot_url, ticker=ticker)
 
+@app.route('/plotly', methods=['GET'])
+def test_plotly():
+    div = gp.gen_plotly()
+    return render_template('test.html', plotly=Markup(div))
 
 if __name__ == '__main__':
     app.run(debug=True)
