@@ -16,18 +16,12 @@
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
-            <!-- <form action = "http://localhost:5000/" method = "POST">
-                <p>Name <input type = "text" name = "Name" /></p>
-                <p>Physics <input type = "text" name = "Physics" /></p>
-                <p>Chemistry <input type = "text" name = "chemistry" /></p>
-                <p>Maths <input type ="text" name = "Mathematics" /></p>
-                <p><input type = "submit" value = "submit" /></p>
-             </form> -->
+            
+        </hr>
             <div class="img">
-                    <img src= "data:image/png;base64, {{ plot_url }}">
+                <div>{{ticker}}</div>
+                <img src= "data:image/png;base64, {{ plot_url }}">
             </div>
         </div>
-        {{ result }}
-        
     </body>
 </html>
