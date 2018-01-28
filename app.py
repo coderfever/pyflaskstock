@@ -16,9 +16,10 @@ def get_homepage():
 
 @app.route('/', methods=['POST'])
 def create_stock_chart():
-    ticker = str(request.form['symbol'])
-    period = request.form['freq']
-    stock = stk.get_google_finance_intraday(ticker=ticker.upper(), period=period, days=5, exchange='NYSE')
+    ticker = str(request.form['ticker']).upper()
+    print(ticker)
+    period = 60#request.form['freq']
+    stock = stk.get_google_finance_intraday(ticker=ticker, period=period, days=5, exchange='NYSE')
     plot_url = gc.generate_plot(stock)
     return render_template('home.html', plot_url=plot_url, ticker=ticker)
 
