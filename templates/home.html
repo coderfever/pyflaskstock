@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <form class="form-inline" method="POST" action="http://localhost:5000/">
+                <div class="form-group">
+                    <label for="Symbol">Symbol</label>
+                    <input type="text" class="form-control" id="symbol" name="symbol">
+                </div>
+                <div class="form-group">
+                    <label for="Frequency">Frequency</label>
+                    <input type="number" class="form-control" id="freq" name="freq">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <!-- <form action = "http://localhost:5000/" method = "POST">
+                <p>Name <input type = "text" name = "Name" /></p>
+                <p>Physics <input type = "text" name = "Physics" /></p>
+                <p>Chemistry <input type = "text" name = "chemistry" /></p>
+                <p>Maths <input type ="text" name = "Mathematics" /></p>
+                <p><input type = "submit" value = "submit" /></p>
+             </form> -->
+            <div class="img">
+                    <img src= "data:image/png;base64, {{ plot_url }}">
+            </div>
+        </div>
+        {{ result }}
+        
+    </body>
+</html>
