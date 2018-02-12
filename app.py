@@ -15,7 +15,7 @@ def get_homepage():
     return render_template('home.html', plot_url=plot_url, ticker=ticker)
 
 @app.route('/', methods=['POST'])
-def create_stock_chart():
+def post_homepage():
     ticker = str(request.form['ticker']).upper()
     print(ticker)
     period = 60#request.form['freq']
@@ -24,7 +24,7 @@ def create_stock_chart():
     return render_template('home.html', plot_url=plot_url, ticker=ticker)
 
 @app.route('/compare', methods=['GET'])
-def create_stock_chart2():
+def compare_stocks():
     ticker1 = 'F'
     ticker2 = 'A'
     period = 60
@@ -32,7 +32,7 @@ def create_stock_chart2():
     stock2 =stk.get_google_finance_intraday(ticker=ticker2, period=period, days=5, exchange='NYSE')
 
     corr = stock1['Close'].corr(stock2['Close'])
-    plot_url = gc.generate_plot(stock1)
+    plot_url = gc.generate_plot([stock1, stock2])
     return render_template('compare.html', plot_url=plot_url, ticker=ticker1, corr=corr)
 
 @app.route('/plotly', methods=['GET'])
