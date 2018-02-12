@@ -7,7 +7,6 @@ import gen_plotly as gp
 
 app = Flask(__name__)
 
-
 @app.route('/', methods=['GET'])
 def get_homepage():
     ticker = 'F'
@@ -23,6 +22,18 @@ def create_stock_chart():
     stock = stk.get_google_finance_intraday(ticker=ticker, period=period, days=5, exchange='NYSE')
     plot_url = gc.generate_plot(stock)
     return render_template('home.html', plot_url=plot_url, ticker=ticker)
+
+@app.route('/compare', methods=['GET'])
+def create_stock_chart2():
+    ticker1 = 'F'
+    ticker2 = 'A'
+    period = 60
+    stock1 = stk.get_google_finance_intraday(ticker=ticker1, period=period, days=5, exchange='NYSE')
+    stock2 =stk.get_google_finance_intraday(ticker=ticker2, period=period, days=5, exchange='NYSE')
+
+    corr = stock1['Close'].corr(stock2['Close'])
+    plot_url = gc.generate_plot(stock1)
+    return render_template('compare.html', plot_url=plot_url, ticker=ticker1, corr=corr)
 
 @app.route('/plotly', methods=['GET'])
 def test_plotly():
