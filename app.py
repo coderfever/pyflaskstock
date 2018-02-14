@@ -11,7 +11,7 @@ app = Flask(__name__)
 def get_homepage():
     ticker = 'F'
     stock = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
-    plot_url = gc.generate_plot(stock)
+    plot_url = gc.generate_plot({'F': stock})
     return render_template('home.html', plot_url=plot_url, ticker=ticker)
 
 @app.route('/', methods=['POST'])
@@ -37,7 +37,9 @@ def compare_stocks():
 
 @app.route('/plotly', methods=['GET'])
 def test_plotly():
-    div = gp.gen_plotly()
+    # div = gp.gen_plotly()
+    stock = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
+    div = gp.gen_compare_plots({'F': stock})
     return render_template('test.html', plotly=Markup(div))
 
 if __name__ == '__main__':

@@ -17,9 +17,12 @@ def combine_stocks(stocks):
     '''
     def calc_pct(val):
         return (val - df['Close'][0]) / df['Close'][0] * 100
+
     stock_close_df = pd.DataFrame()
+
     for key, df in stocks.items():
         stock_close_df[key] = df['Close'].apply(calc_pct)
+        
     stock_close_df.fillna(method='ffill', limit=2, inplace=True)
     print(stock_close_df.head())
     return stock_close_df
@@ -51,4 +54,3 @@ if __name__ == '__main__':
     F = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
     A = stk.get_google_finance_intraday(ticker='A', period=60, days=5, exchange='NYSE')
     generate_plot({'F': F, 'A': A})
-    # combine_stocks({'F': F, 'A': A})
