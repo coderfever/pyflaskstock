@@ -16,11 +16,10 @@
     
 </hr>
     <div class="img">
-        <div>{{ticker}}</div>
         {{ plotly }}
         <!-- <img src= "data:image/png;base64, {{ plot_url }}"> -->
     </div>
-    <div>Correlation: {{ corr }}</div>
+    <div>Correlation: {{ corr | safe}}</div>
 </div>
 
 {% endblock %}

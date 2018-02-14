@@ -32,12 +32,9 @@ def compare_stocks():
     for symbol in symbols:
         stocks[symbol] = stk.get_google_finance_intraday(ticker=symbol, period=period, days=5, exchange='NYSE')
 
-    corr = 1 #stock1['Close'].corr(stock2['Close'])
-    # F = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
-    # A = stk.get_google_finance_intraday(ticker='A', period=60, days=5, exchange='NYSE')
-    div = gp.gen_compare_plots(stocks)
-    return render_template('compare.html', plotly=Markup(div), ticker=symbols[0], corr=corr)
-    # return render_template('compare.html', plot_url=plot_url, ticker=ticker1, corr=corr)
+    div, corr = gp.gen_compare_plots(stocks)
+    return render_template('compare.html', plotly=Markup(div), corr=corr)
+
 
 @app.route('/plotly', methods=['GET'])
 def test_plotly():

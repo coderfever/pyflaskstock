@@ -19,10 +19,13 @@ def combine_stocks(stocks):
         stock_close_df[key] = df['Close'].apply(calc_pct)
         
     stock_close_df.fillna(method='ffill', limit=2, inplace=True)
-    return stock_close_df
+
+    correlation = stock_close_df.corr().to_html()
+
+    return stock_close_df, correlation
 
 def gen_compare_plots(stocks):
-    stocks_to_plot = combine_stocks(stocks)
+    stocks_to_plot, correlation = combine_stocks(stocks)
     print(stocks_to_plot.head())
     n = len(stocks_to_plot.index)
     ind = np.arange(len(stocks_to_plot.index))
@@ -54,7 +57,7 @@ def gen_compare_plots(stocks):
 
     fig = go.Figure(data=data, layout=layout)
     div_output = pto.plot(fig, output_type="div", include_plotlyjs=False)
-    return div_output
+    return div_output, correlation
 
 
 def gen_plotly():
