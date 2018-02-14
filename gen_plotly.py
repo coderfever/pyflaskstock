@@ -36,8 +36,9 @@ def gen_compare_plots(stocks):
         )
         data.append(trace)
 
-    tickvals = [x for x in range(0, n, n//5)]
-    ticktext= stocks_to_plot.index[tickvals] .strftime('%Y-%m-%d %H:%M')
+    tickvals = [stocks_to_plot.index.strftime('%Y-%m-%d').tolist().index(x) 
+                for x in np.unique(stocks_to_plot.index.strftime('%Y-%m-%d'))]
+    ticktext= stocks_to_plot.index[tickvals].strftime('%Y-%m-%d %H:%M')
     print(ticktext)
     print(tickvals, stocks_to_plot.index[tickvals] )
 
@@ -57,18 +58,18 @@ def gen_compare_plots(stocks):
 
 
 def gen_plotly():
-    N = 1000
-    random_x = np.random.randn(N)
-    random_y = np.random.randn(N)
-
+    N = 100
+    
+    data = list()
     # Create a trace
-    trace = go.Scatter(
-        x = random_x,
-        y = random_y,
-        mode = 'markers'
-    )
-
-    data = [trace]
+    for _ in range(2):
+        random_x = [x for x in range(N)]
+        random_y = np.random.randn(N)
+        trace = go.Scatter(
+            x = random_x,
+            y = random_y,
+        )
+        data.append(trace)
     layout = go.Layout(title='Test', xaxis=dict(title='Months'), yaxis=dict(title='Test'))
 
     # Plot and embed in ipython notebook!
@@ -87,13 +88,12 @@ def check_date():
     #                 if stocks_to_plot.index[x].strftime('%Y-%m-%d') in ticktext]
     print('2018-02-07' == ticktext[0])
 if __name__ == '__main__':
-    # F = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
-    # A = stk.get_google_finance_intraday(ticker='A', period=60, days=5, exchange='NYSE')
-    # gen_compare_plots({'F':F, 'A': A})
+    F = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
+    A = stk.get_google_finance_intraday(ticker='A', period=60, days=5, exchange='NYSE')
+    gen_compare_plots({'F':F, 'A': A})
     # check_date()
-    date = np.repeat([x for x in range(10)], 3)
-    df = pd.DataFrame(date, index=date)
-    print(date)
-    indexes = [df.index.tolist().index(x) for x in set(df.index)]
-
-    print(indexes)
+    # date = np.repeat([x for x in range(10)], 3)
+    # df = pd.DataFrame(date, index=date)
+    # print(date)
+    # indexes = [df.index.tolist().index(x) for x in set(df.index)]
+    # print(indexes)

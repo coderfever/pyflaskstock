@@ -25,21 +25,26 @@ def post_homepage():
 
 @app.route('/compare', methods=['GET'])
 def compare_stocks():
-    ticker1 = 'F'
-    ticker2 = 'A'
+    symbols = ['F', 'A']
     period = 60
-    stock1 = stk.get_google_finance_intraday(ticker=ticker1, period=period, days=5, exchange='NYSE')
-    stock2 =stk.get_google_finance_intraday(ticker=ticker2, period=period, days=5, exchange='NYSE')
 
-    corr = stock1['Close'].corr(stock2['Close'])
-    plot_url = gc.generate_plot([stock1, stock2])
-    return render_template('compare.html', plot_url=plot_url, ticker=ticker1, corr=corr)
+    stocks = dict()
+    for symbol in symbols:
+        stocks[symbol] = stk.get_google_finance_intraday(ticker=symbol, period=period, days=5, exchange='NYSE')
+
+    corr = 1 #stock1['Close'].corr(stock2['Close'])
+    # F = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
+    # A = stk.get_google_finance_intraday(ticker='A', period=60, days=5, exchange='NYSE')
+    div = gp.gen_compare_plots(stocks)
+    return render_template('compare.html', plotly=Markup(div), ticker=symbols[0], corr=corr)
+    # return render_template('compare.html', plot_url=plot_url, ticker=ticker1, corr=corr)
 
 @app.route('/plotly', methods=['GET'])
 def test_plotly():
     # div = gp.gen_plotly()
-    stock = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
-    div = gp.gen_compare_plots({'F': stock})
+    F = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
+    A = stk.get_google_finance_intraday(ticker='A', period=60, days=5, exchange='NYSE')
+    div = gp.gen_compare_plots({'F': F, 'A': A})
     return render_template('test.html', plotly=Markup(div))
 
 if __name__ == '__main__':
