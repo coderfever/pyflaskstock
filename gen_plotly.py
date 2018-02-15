@@ -80,23 +80,7 @@ def gen_plotly():
     div_output = pto.plot(fig, output_type="div", include_plotlyjs=False)
     return div_output
 
-def check_date():
-    # ticktext= pd.date_range(start=stocks_to_plot['F'].index[0], 
-    #                         end=stocks_to_plot['F'].index[-1], 
-    #                         freq='B').strftime('%Y-%m-%d')
-    ticktext= pd.date_range(start='2018-02-07', 
-                            end='2018-02-13', 
-                            freq='B').strftime('%Y-%m-%d')
-    # tickvals = [x for x in ind 
-    #                 if stocks_to_plot.index[x].strftime('%Y-%m-%d') in ticktext]
-    print('2018-02-07' == ticktext[0])
 if __name__ == '__main__':
     F = stk.get_google_finance_intraday(ticker='F', period=60, days=5, exchange='NYSE')
     A = stk.get_google_finance_intraday(ticker='A', period=60, days=5, exchange='NYSE')
     gen_compare_plots({'F':F, 'A': A})
-    # check_date()
-    # date = np.repeat([x for x in range(10)], 3)
-    # df = pd.DataFrame(date, index=date)
-    # print(date)
-    # indexes = [df.index.tolist().index(x) for x in set(df.index)]
-    # print(indexes)
